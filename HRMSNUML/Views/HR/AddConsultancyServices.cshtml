@@ -1,0 +1,97 @@
+﻿@model HRMSNUML.Models.ConsultancyServices
+
+@{
+    ViewBag.Title = "Add Consultancy Services";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="shadow-lg p-3 mb-5 bg-white rounded">
+    <div class="card card-info mt-2 mx-auto">
+        <div class="card-header" style="background-color: deepskyblue;">
+            <h3 class="card-title">Add Consultancy Services</h3>
+        </div>
+    </div>
+
+    @using (Html.BeginForm("AddConsultancyServices", "HR", FormMethod.Post, new { enctype = "multipart/form-data", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label style="color: #17a2b8;">Title * </label>
+                @Html.EditorFor(model => model.CS_Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CS_Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label style="color: #17a2b8;">Start Date * </label>
+                    <input type="date" name="CS_StartDate" class="form-control" />
+                    @Html.ValidationMessageFor(model => model.CS_StartDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label style="color: #17a2b8;">End Date * </label>
+                <input type="date" name="CS_EndDate" class="form-control" />
+                @Html.ValidationMessageFor(model => model.CS_EndDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label style="color: #17a2b8;">Company Name * </label>        
+                    @Html.EditorFor(model => model.CS_CompanyName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CS_CompanyName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label style="color: #17a2b8;">Description * </label>
+                @Html.EditorFor(model => model.CS_Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CS_Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label style="color: #17a2b8;">Proof Attachment * </label>
+                <input type="file" name="File" id="File" accept=".jpg,.jpeg,.png" class="form-control" />
+                @Html.ValidationMessageFor(model => model.CS_Picture, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-3 col-md-10">
+                <input type="submit" value="Save" class="btn btn-primary btn-block" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-3 col-md-10">
+                <p> @ViewBag.Message</p>
+            </div>
+        </div>
+
+    </div>
+        }
+    </div>
+
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
