@@ -18,14 +18,11 @@ namespace HRMSNUML.Models
         [Required]
         public string IPLeadInventer { get; set; }
 
-        [ForeignKey("DesignationId")]
         public int DesignationId { get; set; }
-        public virtual Designation Designation { get; set; }
 
         [Required]
         public string IPTitle { get; set; }
 
-        [ForeignKey("IPRightCategoryId")]
         public int IPCadtegoryId { get; set; }
 
         [Required]
