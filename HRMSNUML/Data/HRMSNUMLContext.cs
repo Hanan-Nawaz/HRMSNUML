@@ -21,6 +21,9 @@ namespace HRMSNUML.Data
 
         public System.Data.Entity.DbSet<HRMSNUML.Models.ConsultancyServices> ConsultancyServices { get; set; }
         public System.Data.Entity.DbSet<HRMSNUML.Models.Notification> Notification { get; set; }
+        public System.Data.Entity.DbSet<HRMSNUML.Models.Designation> Designation { get; set; }
+        public System.Data.Entity.DbSet<HRMSNUML.Models.IPRightCategory> IPRightCategory { get; set; }
+        public System.Data.Entity.DbSet<HRMSNUML.Models.IPRight> IPRight { get; set; }
 
     }
 }

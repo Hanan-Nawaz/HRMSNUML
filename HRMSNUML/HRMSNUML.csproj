@@ -142,6 +142,9 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ConsultancyServices.cs" />
+    <Compile Include="Models\Designation.cs" />
+    <Compile Include="Models\IPRight.cs" />
+    <Compile Include="Models\IPRightCategory.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
