@@ -6,19 +6,20 @@ using System.Web;
 
 namespace HRMSNUML.Models
 {
-    public class Designation
+    public class Designations
     {
         [Key]
         public int DesignationId { get; set; }
 
         public string Title { get; set; }
 
-        public bool Status { get; set; }
+        public byte Status { get; set; }
 
         public string Scale { get; set; }
 
         public string DesignationType { get; set; }
 
         public string Category { get; set; }
+
     }
 }

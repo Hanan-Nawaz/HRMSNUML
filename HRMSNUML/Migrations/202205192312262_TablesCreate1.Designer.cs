@@ -7,13 +7,13 @@ namespace HRMSNUML.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class NotificationCreate : IMigrationMetadata
+    public sealed partial class TablesCreate1 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(NotificationCreate));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(TablesCreate1));
         
         string IMigrationMetadata.Id
         {
-            get { return "202205171929462_NotificationCreate"; }
+            get { return "202205192312262_TablesCreate1"; }
         }
         
         string IMigrationMetadata.Source

@@ -136,15 +136,23 @@
     <Compile Include="Migrations\202205171844428_InitialCreate.designer.cs">
       <DependentUpon>202205171844428_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202205171929462_NotificationCreate.cs" />
-    <Compile Include="Migrations\202205171929462_NotificationCreate.designer.cs">
-      <DependentUpon>202205171929462_NotificationCreate.cs</DependentUpon>
+    <Compile Include="Migrations\202205192245246_NotificationCreate1.cs" />
+    <Compile Include="Migrations\202205192245246_NotificationCreate1.designer.cs">
+      <DependentUpon>202205192245246_NotificationCreate1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202205192249399_TablesCreate.cs" />
+    <Compile Include="Migrations\202205192249399_TablesCreate.designer.cs">
+      <DependentUpon>202205192249399_TablesCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202205192312262_TablesCreate1.cs" />
+    <Compile Include="Migrations\202205192312262_TablesCreate1.designer.cs">
+      <DependentUpon>202205192312262_TablesCreate1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Categories.cs" />
     <Compile Include="Models\ConsultancyServices.cs" />
-    <Compile Include="Models\Designation.cs" />
-    <Compile Include="Models\IPRight.cs" />
-    <Compile Include="Models\IPRightCategory.cs" />
+    <Compile Include="Models\Designations.cs" />
+    <Compile Include="Models\IPRights.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -183,6 +191,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\HR\AddConsultancyServices.cshtml" />
     <Content Include="Views\HR\AddNotifications.cshtml" />
+    <Content Include="Views\HR\AddIPRight.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -205,8 +214,14 @@
     <EmbeddedResource Include="Migrations\202205171844428_InitialCreate.resx">
       <DependentUpon>202205171844428_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202205171929462_NotificationCreate.resx">
-      <DependentUpon>202205171929462_NotificationCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202205192245246_NotificationCreate1.resx">
+      <DependentUpon>202205192245246_NotificationCreate1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202205192249399_TablesCreate.resx">
+      <DependentUpon>202205192249399_TablesCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202205192312262_TablesCreate1.resx">
+      <DependentUpon>202205192312262_TablesCreate1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

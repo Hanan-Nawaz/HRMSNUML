@@ -1,0 +1,247 @@
+﻿@model HRMSNUML.Models.IPRights
+
+@{
+    ViewBag.Title = "Add IPRight";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="shadow-lg p-3 mb-5 bg-white rounded">
+    <div class="card card-info mt-2 mx-auto">
+        <div class="card-header" style="background-color: deepskyblue;">
+            <h3 class="card-title">Add Consultancy Services</h3>
+        </div>
+    </div>
+
+    @using (Html.BeginForm("AddIPRight", "HR", FormMethod.Post, new { enctype = "multipart/form-data", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label style="color: #17a2b8;">Inventer Name * </label>
+                    @Html.EditorFor(model => model.IPInventerName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.IPInventerName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label style="color: #17a2b8;">Lead Inventer * </label>
+                    @Html.EditorFor(model => model.IPLeadInventer, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.IPLeadInventer, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label style="color: #17a2b8;">Designation * </label>
+                    @Html.DropDownListFor(m => m.DesignationId, new SelectList((IEnumerable<SelectListItem>)ViewData["ddlDesignation"], "Value", "Text"), new { id = "ddlDesignation", @class = "form-control select2" })
+                    @Html.ValidationMessageFor(model => model.DesignationId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label style="color: #17a2b8;">Title * </label>
+                    @Html.EditorFor(model => model.IPTitle, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.IPTitle, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label style="color: #17a2b8;">Category * </label>
+                    @Html.DropDownListFor(m => m.IPRightCategoryId, new SelectList((IEnumerable<SelectListItem>)ViewData["ddlcategory"], "Value", "Text"), new { id = "ddlcategory", @class = "form-control select2" })
+                    @Html.ValidationMessageFor(model => model.IPRightCategoryId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label style="color: #17a2b8;">Don't find desired category. Add new Category </label>
+
+                <div class="form-group">
+
+                    <a height="240px" class="btn btn-primary " href="AddIPRight">+</a>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label style="color: #17a2b8;">Development Status* </label>
+                    @Html.DropDownListFor(m => m.IPDevelopmentStatus, new SelectList((IEnumerable<SelectListItem>)ViewData["ddldevelopmentstatus"], "Value", "Text"), new { id = "ddldevelopmentstatus", @class = "form-control select2" })
+                    @Html.ValidationMessageFor(model => model.IPDevelopmentStatus, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label style="color: #17a2b8;">Key Significant Aspects * </label>
+                    @Html.EditorFor(model => model.IPKey_S_Aspects, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.IPKey_S_Aspects, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+         
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label style="color: #17a2b8;">Commerical Partner(if any)  </label>
+                    @Html.EditorFor(model => model.IPCommericalPartner, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.IPCommericalPartner, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label style="color: #17a2b8;">Patent Discolure Form copy * </label>
+                    <input type="file" name="File" id="File" accept=".jpg,.jpeg,.png,.pdf" class="form-control" />
+                </div>
+            </div>
+
+         
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label style="color: #17a2b8;">Type * </label>
+                    @Html.DropDownListFor(m => m.IPType, new SelectList((IEnumerable<SelectListItem>)ViewData["ddltype"], "Value", "Text"), new { id = "ddltype", @class = "form-control select2" })
+                    @Html.ValidationMessageFor(model => model.IPType, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label style="color: #17a2b8;">Finanical Support * </label>
+                    <select class="select2 form-control mb-3 custom-select"
+                            name="IPF_Support" id="IPF_Support" onChange=showHide()>
+                        <option value="0">Select</option>
+
+                        <option value="1">Yes</option>
+                        <option value="2">No</option>
+                    </select>
+                    @Html.ValidationMessageFor(model => model.IPF_Support, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <script>
+                function showHide() {
+                    let travelhistory = document.getElementById('IPF_Support')
+
+                    if (travelhistory.value == 2) {
+                        document.getElementById('IPDescription').style.display = 'none'
+                        document.getElementById('IPDescriptiontitle').style.display = 'none'
+                    } else {
+                        document.getElementById('IPDescription').style.display = 'block'
+                        document.getElementById('IPDescriptiontitle').style.display = 'block'
+                    }
+                }
+            </script>
+
+           
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label style="color: #17a2b8;" id="IPDescriptiontitle">Descripition * </label>
+                    <input type="text" name="IPDescription" id="IPDescription" class="form-control" />
+                    @Html.ValidationMessageFor(model => model.IPDescription, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label style="color: #17a2b8;">Status * </label>
+                    <select class="select2 form-control mb-3 custom-select"
+                            name="IPStatus" id="IPStatus" onChange=showHidestatus()>
+                        <option value="0" selected>Select</option>
+
+                        <option value="1">Approved</option>
+                        <option value="2">Inprogress</option>
+                        <option value="3">Rejected</option>
+                    </select>
+                    @Html.ValidationMessageFor(model => model.IPStatus, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <script>
+                function showHidestatus() {
+                    let travelhistory = document.getElementById('IPStatus')
+
+                    if (travelhistory.value == 1) {
+                        document.getElementById('IPApprovalDate').style.display = 'block'
+                        document.getElementById('IPRegisterDate').style.display = 'none'
+                        document.getElementById('IPApprovalDatetitle').style.display = 'block'
+                        document.getElementById('IPRegisterDatetitle').style.display = 'none'
+                    }
+                    else if (travelhistory.value == 2) {
+                        document.getElementById('IPRegisterDate').style.display = 'block'
+                        document.getElementById('IPApprovalDate').style.display = 'none'
+                        document.getElementById('IPRegisterDatetitle').style.display = 'block'
+                        document.getElementById('IPApprovalDatetitle').style.display = 'none'
+                    }
+                    else {
+                        document.getElementById('IPRegisterDate').style.display = 'none'
+                        document.getElementById('IPApprovalDate').style.display = 'none'
+                        document.getElementById('IPRegisterDatetitle').style.display = 'none'
+                        document.getElementById('IPApprovalDatetitle').style.display = 'none'
+                    }
+
+                }
+            </script>
+
+           
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label style="color: #17a2b8; display: none;" id="IPApprovalDatetitle">Approval Date * </label>
+                    <input type="date" name="IPApprovalDate" id="IPApprovalDate" class="form-control" style="display: none" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label id="IPRegisterDatetitle" style="color: #17a2b8; display: none;">Registration Date* </label>
+                    <input type="date" name="IPRegisterDate" id="IPRegisterDate" class="form-control" style="display: none" />
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label style="color: #17a2b8;"> </label>
+                    <input type="submit" value="Save" class="btn btn-primary btn-block" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <p> @ViewBag.Message</p>
+                </div>
+            </div>
+        </div>
+
+    }
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

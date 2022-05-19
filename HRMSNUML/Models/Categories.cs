@@ -6,8 +6,9 @@ using System.Web;
 
 namespace HRMSNUML.Models
 {
-    public class IPRightCategory
+    public class Categories
     {
+
         [Key]
         public int IPRightCategoryId { get; set; }
 

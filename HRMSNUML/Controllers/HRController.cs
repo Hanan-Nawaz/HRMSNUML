@@ -28,6 +28,53 @@ namespace HRMSNUML.Controllers
             return View();
         }
 
+        // GET: HR/AddIPRight
+        public ActionResult AddIPRight()
+        {
+            List<SelectListItem> ddlDesignation = new List<SelectListItem>();
+            List<Designations> _VMDesignationDetail = new List<Designations>();
+            ddlDesignation.Add(new SelectListItem { Text = "Select", Value = "" });
+            _VMDesignationDetail = db.Designations.ToList();
+            foreach (var item in _VMDesignationDetail)
+            {
+                ddlDesignation.Add(new SelectListItem { Text = item.Title, Value = item.DesignationId.ToString() });
+            }
+            ViewData["ddlDesignation"] = ddlDesignation;
+
+
+            List<SelectListItem> ddlcategory = new List<SelectListItem>();
+            List<Categories> _VMCategory = new List<Categories>();
+            ddlcategory.Add(new SelectListItem { Text = "Select", Value = "" });
+            _VMCategory = db.Categories.ToList();
+            foreach (var item in _VMCategory)
+            {
+                ddlcategory.Add(new SelectListItem { Text = item.Title, Value = item.IPRightCategoryId.ToString() });
+            }
+
+            ViewData["ddlcategory"] = ddlcategory;
+
+            List<SelectListItem> ddldevelopmentstatus = new List<SelectListItem>();
+            ddldevelopmentstatus.Add(new SelectListItem { Text = "Select", Value = "" });
+            ddldevelopmentstatus.Add(new SelectListItem { Text = "Videos", Value = "1" });
+            ddldevelopmentstatus.Add(new SelectListItem { Text = "Prototype", Value = "2" });
+            ddldevelopmentstatus.Add(new SelectListItem { Text = "Validation", Value = "3" });
+            ddldevelopmentstatus.Add(new SelectListItem { Text = "Production", Value = "4" });
+
+            ViewData["ddldevelopmentstatus"] = ddldevelopmentstatus;
+
+            List<SelectListItem> ddltype = new List<SelectListItem>();
+            ddltype.Add(new SelectListItem { Text = "Select", Value = "" });
+            ddltype.Add(new SelectListItem { Text = "National", Value = "1" });
+            ddltype.Add(new SelectListItem { Text = "International", Value = "2" });
+
+            ViewData["ddltype"] = ddltype;
+
+            return View();
+        }
+
+
+
+
         // POST: HR/AddConsultancyServices
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -76,6 +123,82 @@ namespace HRMSNUML.Controllers
             }
 
             return View(notification);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddIPRight(IPRights ipright)
+        {
+            List<SelectListItem> ddlDesignation = new List<SelectListItem>();
+            List<Designations> _VMDesignationDetail = new List<Designations>();
+            ddlDesignation.Add(new SelectListItem { Text = "Select", Value = "" });
+            _VMDesignationDetail = db.Designations.ToList();
+            foreach (var item in _VMDesignationDetail)
+            {
+                ddlDesignation.Add(new SelectListItem { Text = item.Title, Value = item.DesignationId.ToString() });
+            }
+            ViewData["ddlDesignation"] = ddlDesignation;
+
+
+            List<SelectListItem> ddlcategory = new List<SelectListItem>();
+            List<Categories> _VMCategory = new List<Categories>();
+            ddlcategory.Add(new SelectListItem { Text = "Select", Value = "" });
+            _VMCategory = db.Categories.ToList();
+            foreach (var item in _VMCategory)
+            {
+                ddlcategory.Add(new SelectListItem { Text = item.Title, Value = item.IPRightCategoryId.ToString() });
+            }
+
+            ViewData["ddlcategory"] = ddlcategory;
+
+            List<SelectListItem> ddldevelopmentstatus = new List<SelectListItem>();
+            ddldevelopmentstatus.Add(new SelectListItem { Text = "Select", Value = "" });
+            ddldevelopmentstatus.Add(new SelectListItem { Text = "Videos", Value = "1" });
+            ddldevelopmentstatus.Add(new SelectListItem { Text = "Prototype", Value = "2" });
+            ddldevelopmentstatus.Add(new SelectListItem { Text = "Validation", Value = "3" });
+            ddldevelopmentstatus.Add(new SelectListItem { Text = "Production", Value = "4" });
+
+            ViewData["ddldevelopmentstatus"] = ddldevelopmentstatus;
+
+            List<SelectListItem> ddltype = new List<SelectListItem>();
+            ddltype.Add(new SelectListItem { Text = "Select", Value = "" });
+            ddltype.Add(new SelectListItem { Text = "National", Value = "1" });
+            ddltype.Add(new SelectListItem { Text = "International", Value = "2" });
+
+            ViewData["ddltype"] = ddltype;
+
+            string filename = Path.GetFileName(ipright.File.FileName);
+            string _filename = DateTime.Now.ToString("hhmmssfff") + filename;
+            string path = Path.Combine(Server.MapPath("~/Images/"), _filename);
+            ipright.IPFormCopy = "~/Images/" + _filename;
+
+            IPRights entity = new IPRights
+            {
+                IPID = ipright.IPID,
+                IPInventerName = ipright.IPInventerName,
+                IPLeadInventer = ipright.IPLeadInventer,
+                DesignationId = ipright.DesignationId,
+                IPTitle = ipright.IPTitle,
+                IPRightCategoryId = ipright.IPRightCategoryId,
+                IPDevelopmentStatus = ipright.IPDevelopmentStatus,
+                IPKey_S_Aspects = ipright.IPKey_S_Aspects,
+                IPCommericalPartner = ipright.IPCommericalPartner,
+                IPFormCopy = ipright.IPFormCopy,
+                IPType = ipright.IPType,
+                IPF_Support = ipright.IPF_Support,
+                IPDescription = ipright.IPDescription,
+                IPStatus = ipright.IPStatus,
+                IPApprovalDate = ipright.IPApprovalDate,
+                IPRegisterDate = ipright.IPRegisterDate,
+            };
+            db.IPRights.Add(entity);
+            if (db.SaveChanges() > 0)
+            {
+                ipright.File.SaveAs(path);
+                ViewBag.Message = "Patent/IP Right Saved Successfully";
+            }
+            return View()
+;
         }
 
         protected override void Dispose(bool disposing)

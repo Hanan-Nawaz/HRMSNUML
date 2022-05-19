@@ -7,7 +7,7 @@ using System.Web;
 
 namespace HRMSNUML.Models
 {
-    public class IPRight
+    public class IPRights
     {
         [Key]
         public int IPID { get; set; }
@@ -23,7 +23,7 @@ namespace HRMSNUML.Models
         [Required]
         public string IPTitle { get; set; }
 
-        public int IPCadtegoryId { get; set; }
+        public int IPRightCategoryId { get; set; }
 
         [Required]
         public int IPDevelopmentStatus { get; set; }
@@ -31,9 +31,8 @@ namespace HRMSNUML.Models
         [Required]
         public string IPKey_S_Aspects { get; set; }
 
-        public string IPCommericalPartner{ get; set; }
+        public string IPCommericalPartner { get; set; }
 
-        [Required]
         public string IPFormCopy { get; set; }
 
         [Required]
@@ -43,11 +42,15 @@ namespace HRMSNUML.Models
         public string IPF_Support { get; set; }
         public string IPDescription { get; set; }
 
-        [Required]
         public string IPStatus { get; set; }
 
+        [DataType("datetime2")]
         public DateTime IPApprovalDate { get; set; }
-        public DateTime IPRegisterDate{ get; set; }
 
+        [DataType("datetime2")]
+        public DateTime IPRegisterDate { get; set; }
+
+        [NotMapped]
+        public HttpPostedFileBase File { get; set; }
     }
 }
