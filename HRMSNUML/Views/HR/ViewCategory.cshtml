@@ -1,0 +1,48 @@
+﻿@model IEnumerable<HRMSNUML.Models.Categories>
+
+@{
+    ViewBag.Title = "View Category";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="shadow-lg p-3 mb-5 bg-white rounded">
+    <div class="card card-info mt-2 mx-auto">
+        <div class="card-header" style="background-color: deepskyblue;">
+            <h3 class="card-title">View Category</h3>
+        </div>
+    </div>
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditCategory", new { id = item.IPRightCategoryId }) |
+                    @Html.ActionLink("Delete", "DeleteCategory", new { id = item.IPRightCategoryId })
+                </td>
+            </tr>
+        }
+
+    </table>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label style="color: #17a2b8;">Back to Patent / IP Rights Form </label>
+
+            <div class="form-group">
+
+                <a height="240px" class="btn btn-primary " href="AddIPRight"> Back </a>
+            </div>
+        </div>
+    </div>
+</div>

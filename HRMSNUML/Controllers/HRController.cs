@@ -72,10 +72,50 @@ namespace HRMSNUML.Controllers
             return View();
         }
 
+        // GET: HR/AddCategory
+        public ActionResult AddCategory()
+        {
+            return View();
+        }
 
 
+        // GET: ViewCategory
+        public ActionResult ViewCategory()
+        {
+            return View(db.Categories.ToList());
+        }
 
-        // POST: HR/AddConsultancyServices
+        // GET: EditCategory
+        public ActionResult EditCategory(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Categories categories = db.Categories.Find(id);
+            if (categories == null)
+            {
+                return HttpNotFound();
+            }
+            return View(categories);
+        }
+
+        // GET: DeleteCategory
+        public ActionResult DeleteCategory(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Categories categories = db.Categories.Find(id);
+            if (categories == null)
+            {
+                return HttpNotFound();
+            }
+            return View(categories);
+        }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddConsultancyServices([Bind(Include = "CS_Id,CS_Title,CS_StartDate,CS_EndDate,CS_CompanyName,CS_Description,CS_Picture,File")] ConsultancyServices consultancyService)
@@ -100,7 +140,6 @@ namespace HRMSNUML.Controllers
             return View(consultancyService);
         }
 
-        // POST: HR/AddConsultancyServices
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddNotifications([Bind(Include = "NFT_Id,NTF_Title,NTFDate,NFT_Remarks,NFT_Picture,File")] Notification notification)
@@ -197,8 +236,55 @@ namespace HRMSNUML.Controllers
                 ipright.File.SaveAs(path);
                 ViewBag.Message = "Patent/IP Right Saved Successfully";
             }
-            return View()
+            return View();
 ;
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddCategory(Categories categories)
+        {
+            Categories entity = new Categories
+            {
+                IPRightCategoryId = categories.IPRightCategoryId,
+                Title = categories.Title,
+            };
+
+            db.Categories.Add(entity);
+            if (db.SaveChanges() > 0)
+            {
+                ViewBag.Message = "Category Saved Successfully";
+            }
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditCategory( Categories categories)
+        {
+            Categories entity = new Categories
+            {
+                IPRightCategoryId = categories.IPRightCategoryId,
+                Title = categories.Title,
+            };
+
+            if (ModelState.IsValid)
+            {
+                db.Entry(entity).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("ViewCategory");
+            }
+            return View(categories);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteCategory(int id)
+        {
+            Categories categories = db.Categories.Find(id);
+            db.Categories.Remove(categories);
+            db.SaveChanges();
+            return RedirectToAction("ViewCategory");
         }
 
         protected override void Dispose(bool disposing)
