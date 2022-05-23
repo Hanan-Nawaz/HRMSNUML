@@ -1,0 +1,81 @@
+﻿@model IEnumerable<HRMSNUML.Models.Award>
+
+@{
+    ViewBag.Title = "View Awards";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="shadow-lg p-3 mb-5 bg-white rounded">
+    <div class="card card-info mt-2 mx-auto">
+        <div class="card-header" style="background-color: deepskyblue;">
+            <h3 class="card-title">View Awards</h3>
+        </div>
+    </div>
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Award_Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Award_Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Award_CategoryID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Award_Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Award_Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Award_Picture)
+
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Award_Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Award_Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Award_CategoryID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Award_Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Award_Type)
+                </td>
+                <td>
+                    <img src="@Url.Content(item.Award_Picture)" alt="" width="50" height="50" />
+
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditAwards", new { id = item.Award_Id }) |
+                    @Html.ActionLink("Delete", "DeleteAwards", new { id = item.Award_Id })
+                </td>
+            </tr>
+
+
+        }
+
+    </table>
+    <div class="row">
+        <div class="col-md-6">
+            <label style="color: #17a2b8;">Back to Awards / Achievements Form </label>
+
+            <div class="form-group">
+
+                <a height="240px" class="btn btn-primary " href="AddAwards"> Back </a>
+            </div>
+        </div>
+    </div>
+    </div>

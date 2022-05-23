@@ -72,20 +72,83 @@ namespace HRMSNUML.Controllers
             return View();
         }
 
-        // GET: HR/AddCategory
+        // GET: HR/AddAwards
+        public ActionResult AddAwards()
+        {
+            List<SelectListItem> ddlcategory = new List<SelectListItem>();
+            List<AwardsCategory> _VMCategory = new List<AwardsCategory>();
+            ddlcategory.Add(new SelectListItem { Text = "Select", Value = "" });
+            _VMCategory = db.AwardsCategory.ToList();
+            foreach (var item in _VMCategory)
+            {
+                ddlcategory.Add(new SelectListItem { Text = item.Title, Value = item.AwardCategoryId.ToString() });
+            }
+
+            ViewData["ddlcategory"] = ddlcategory;
+
+            return View();
+        }
+
+        // GET: HR/EditAwards
+        public ActionResult EditAwards(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            List<SelectListItem> ddlcategory = new List<SelectListItem>();
+            List<AwardsCategory> _VMCategory = new List<AwardsCategory>();
+            ddlcategory.Add(new SelectListItem { Text = "Select", Value = "" });
+            _VMCategory = db.AwardsCategory.ToList();
+            foreach (var item in _VMCategory)
+            {
+                ddlcategory.Add(new SelectListItem { Text = item.Title, Value = item.AwardCategoryId.ToString() });
+            }
+
+            ViewData["ddlcategory"] = ddlcategory;
+            Award award = db.Award.Find(id);
+            if (award == null)
+            {
+                return HttpNotFound();
+            }
+            return View(award);
+        }
+
+        // GET: HR/ViewAwards
+        public ActionResult ViewAwards()
+        {
+            
+            return View(db.Award.ToList());
+        }
+
+        // GET: HR/DeleteAwards
+        public ActionResult DeleteAwards(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Award award = db.Award.Find(id);
+            if (award == null)
+            {
+                return HttpNotFound();
+            }
+            return View(award);
+        }
+
+        // GET: HR/IPRightCategory/AddCategory
         public ActionResult AddCategory()
         {
             return View();
         }
 
-
-        // GET: ViewCategory
+        // GET: HR/IPRightCategory/ViewCategory
         public ActionResult ViewCategory()
         {
             return View(db.Categories.ToList());
         }
 
-        // GET: EditCategory
+        // GET: HR/IPRightCategory/EditCategory
         public ActionResult EditCategory(int? id)
         {
             if (id == null)
@@ -100,7 +163,7 @@ namespace HRMSNUML.Controllers
             return View(categories);
         }
 
-        // GET: DeleteCategory
+        // GET: HR/IPRightCategory/DeleteCategory
         public ActionResult DeleteCategory(int? id)
         {
             if (id == null)
@@ -115,6 +178,47 @@ namespace HRMSNUML.Controllers
             return View(categories);
         }
 
+        // GET: HR/AwardCategory/AddAwardCategory
+        public ActionResult AddAwardCategory()
+        {
+            return View();
+        }
+
+        // GET: HR/AwardCategory/ViewAwardCategory
+        public ActionResult ViewAwardCategory()
+        {
+            return View(db.AwardsCategory.ToList());
+        }
+
+        // GET: HR/AwardCategory/EditAwardCategory
+        public ActionResult EditAwardCategory(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            AwardsCategory categories = db.AwardsCategory.Find(id);
+            if (categories == null)
+            {
+                return HttpNotFound();
+            }
+            return View(categories);
+        }
+
+        // GET: HR/AwardCategory/DeleteAwardCategory
+        public ActionResult DeleteAwardCategory(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            AwardsCategory categories = db.AwardsCategory.Find(id);
+            if (categories == null)
+            {
+                return HttpNotFound();
+            }
+            return View(categories);
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -242,6 +346,99 @@ namespace HRMSNUML.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        public ActionResult AddAwards(Award award)
+        {
+
+            List<SelectListItem> ddlcategory = new List<SelectListItem>();
+            List<AwardsCategory> _VMCategory = new List<AwardsCategory>();
+            ddlcategory.Add(new SelectListItem { Text = "Select", Value = "" });
+            _VMCategory = db.AwardsCategory.ToList();
+            foreach (var item in _VMCategory)
+            {
+                ddlcategory.Add(new SelectListItem { Text = item.Title, Value = item.AwardCategoryId.ToString() });
+            }
+
+            ViewData["ddlcategory"] = ddlcategory;
+
+            string filename = Path.GetFileName(award.File.FileName);
+            string _filename = DateTime.Now.ToString("hhmmssfff") + filename;
+            string path = Path.Combine(Server.MapPath("~/Images/"), _filename);
+            award.Award_Picture = "~/Images/" + _filename;
+
+            Award entity = new Award
+            {
+                Award_Id = award.Award_Id,
+                Award_CategoryID = award.Award_CategoryID,
+                Award_Title = award.Award_Title,
+                Award_Date = award.Award_Date,
+                Award_Description = award.Award_Description,
+                Award_Type = award.Award_Type,
+                Award_Picture = award.Award_Picture
+            };
+            db.Award.Add(entity);
+            if (db.SaveChanges() > 0)
+            {
+                award.File.SaveAs(path);
+                ViewBag.Message = "Award/Achievement Right Saved Successfully";
+            }
+            return View();
+            
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditAwards(Award award)
+        {
+            List<SelectListItem> ddlcategory = new List<SelectListItem>();
+            List<AwardsCategory> _VMCategory = new List<AwardsCategory>();
+            ddlcategory.Add(new SelectListItem { Text = "Select", Value = "" });
+            _VMCategory = db.AwardsCategory.ToList();
+            foreach (var item in _VMCategory)
+            {
+                ddlcategory.Add(new SelectListItem { Text = item.Title, Value = item.AwardCategoryId.ToString() });
+            }
+
+            ViewData["ddlcategory"] = ddlcategory;
+
+            string filename = Path.GetFileName(award.File.FileName);
+            string _filename = DateTime.Now.ToString("hhmmssfff") + filename;
+            string path = Path.Combine(Server.MapPath("~/Images/"), _filename);
+            award.Award_Picture = "~/Images/" + _filename;
+
+            Award entity = new Award
+            {
+                Award_Id = award.Award_Id,
+                Award_CategoryID = award.Award_CategoryID,
+                Award_Title = award.Award_Title,
+                Award_Date = award.Award_Date,
+                Award_Description = award.Award_Description,
+                Award_Type = award.Award_Type,
+                Award_Picture = award.Award_Picture
+            };
+
+            if (ModelState.IsValid)
+            {
+                db.Entry(award).State = EntityState.Modified;
+                db.SaveChanges();
+                award.File.SaveAs(path);
+                return RedirectToAction("ViewAwards");
+            }
+            return View(award);
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteAwards(int id)
+        {
+            Award award = db.Award.Find(id);
+            db.Award.Remove(award);
+            db.SaveChanges();
+            return RedirectToAction("ViewAwards");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddCategory(Categories categories)
         {
             Categories entity = new Categories
@@ -286,6 +483,55 @@ namespace HRMSNUML.Controllers
             db.SaveChanges();
             return RedirectToAction("ViewCategory");
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddAwardCategory(AwardsCategory categories)
+        {
+            AwardsCategory entity = new AwardsCategory
+            {
+                AwardCategoryId = categories.AwardCategoryId,
+                Title = categories.Title,
+            };
+
+            db.AwardsCategory.Add(entity);
+            if (db.SaveChanges() > 0)
+            {
+                ViewBag.Message = "Category Saved Successfully";
+            }
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditAwardCategory(AwardsCategory categories)
+        {
+            AwardsCategory entity = new AwardsCategory
+            {
+                AwardCategoryId = categories.AwardCategoryId,
+                Title = categories.Title,
+            };
+
+            if (ModelState.IsValid)
+            {
+                db.Entry(entity).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("ViewAwardCategory");
+            }
+            return View(categories);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteAwardCategory(int id)
+        {
+            AwardsCategory categories = db.AwardsCategory.Find(id);
+            db.AwardsCategory.Remove(categories);
+            db.SaveChanges();
+            return RedirectToAction("ViewAwardCategory");
+        }
+
+
 
         protected override void Dispose(bool disposing)
         {

@@ -24,6 +24,8 @@ namespace HRMSNUML.Data
         public System.Data.Entity.DbSet<HRMSNUML.Models.Categories> Categories { get; set; }
         public System.Data.Entity.DbSet<HRMSNUML.Models.Designations> Designations { get; set; }
         public System.Data.Entity.DbSet<HRMSNUML.Models.IPRights> IPRights { get; set; }
+        public System.Data.Entity.DbSet<HRMSNUML.Models.AwardsCategory> AwardsCategory { get; set; }
+        public System.Data.Entity.DbSet<HRMSNUML.Models.Award> Award { get; set; }
 
     }
 }

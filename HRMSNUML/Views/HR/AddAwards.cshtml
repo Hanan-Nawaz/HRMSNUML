@@ -1,0 +1,137 @@
+﻿@model HRMSNUML.Models.Award
+
+@{
+    ViewBag.Title = "Add Awards";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="shadow-lg p-3 mb-5 bg-white rounded">
+    <div class="card card-info mt-2 mx-auto">
+        <div class="card-header" style="background-color: deepskyblue;">
+            <h3 class="card-title">Add Awards / Achievements</h3>
+        </div>
+    </div>
+
+    @using (Html.BeginForm("AddAwards", "HR", FormMethod.Post, new { enctype = "multipart/form-data", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label style="color: #17a2b8;">Category * </label>
+                    @Html.DropDownListFor(m => m.Award_CategoryID, new SelectList((IEnumerable<SelectListItem>)ViewData["ddlcategory"], "Value", "Text"), new { id = "ddlcategory", @class = "form-control select2" })
+                    @Html.ValidationMessageFor(model => model.Award_CategoryID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label style="color: #17a2b8;">Don't find desired category. Add new Category </label>
+
+                <div class="form-group">
+
+                    <a height="240px" class="btn btn-primary " href="AddAwardCategory">+</a>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label style="color: #17a2b8;">Date * </label>
+                    <input type="date" name="Award_Date" id="Award_Date" class="form-control" />
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label style="color: #17a2b8;">Title * </label>
+                    @Html.EditorFor(model => model.Award_Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Award_Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label style="color: #17a2b8;">Type * </label>
+                    <select class="select2 form-control mb-3 custom-select"
+                            name="Award_Type" id="Award_Type" onChange=showHide()>
+                        <option value="0">Select</option>
+
+                        <option value="1">Awards</option>
+                        <option value="2">Achievements</option>
+                    </select>
+                    @Html.ValidationMessageFor(model => model.Award_Type, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label style="color: #17a2b8;">Description * </label>
+                    @Html.EditorFor(model => model.Award_Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Award_Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label style="color: #17a2b8;">Proof Attachment * </label>
+                    <input type="file" name="File" id="File" accept=".jpg,.jpeg,.png,.pdf" class="form-control" />
+                </div>
+            </div>
+
+
+        </div>
+        
+
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label style="color: #17a2b8;"> </label>
+                    <input type="submit" value="Save" class="btn btn-primary btn-block" />
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label style="color: #17a2b8;"> </label>
+
+                <div class="form-group">
+
+
+
+                    <a height="240px"  class="btn btn-primary " href="ViewAwards">View</a>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <p> @ViewBag.Message</p>
+                </div>
+            </div>
+        </div>
+
+    }
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
