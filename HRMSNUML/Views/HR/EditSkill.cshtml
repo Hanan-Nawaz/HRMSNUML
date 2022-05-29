@@ -1,0 +1,129 @@
+﻿@model HRMSNUML.Models.skill
+
+@{
+    ViewBag.Title = "Edit Skills";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+}
+
+<script>
+    $(function () {
+        $("#ddlcategory").change(function () {
+            $.get("/HR/getsubcategorybyId", { ID: $("#ddlcategory").val() }, function (data) {
+                $("#SkillSubCategoryId").empty();
+                $.each(data, function (AddSkill, row) {
+                    $("#SkillSubCategoryId").append("<option value='" + row.SkillSubCategoryId + "'>" + row.Title +"</option>")
+                });
+            })
+        });
+    });
+
+
+</script>
+
+<div class="shadow-lg p-3 mb-5 bg-white rounded">
+    <div class="card card-info mt-2 mx-auto">
+        <div class="card-header" style="background-color: deepskyblue;">
+            <h3 class="card-title">Add Category</h3>
+        </div>
+    </div>
+
+    @using (Html.BeginForm("EditSkill", "HR", FormMethod.Post, new { enctype = "multipart/form-data", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.SkillId)
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label style="color: #17a2b8;">Category * </label>
+                    @Html.DropDownListFor(p => p.skillCategoryID, ViewBag.Category as SelectList, "Select Category", new { id = "ddlcategory", @class = "form-control select2" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label style="color: #17a2b8;">Don't find desired category. Add new Category </label>
+
+                <div class="form-group">
+
+                    <a height="240px" class="btn btn-primary " href="AddSkillCategory">+</a>
+                </div>
+            </div>
+
+
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label style="color: #17a2b8;">SubCategory * </label>
+                    <select id="SkillSubCategoryId" name="SkillSubCategoryId" class="form-control select2">
+                        <option value="">Select SubCategory</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label style="color: #17a2b8;">Don't find desired category. Add new SubCategory </label>
+
+                <div class="form-group">
+
+                    <a height="240px" class="btn btn-primary " href="AddSkillSubCategory">+</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label style="color: #17a2b8;">Brief Biography * </label>
+                    @Html.EditorFor(model => model.BreifBiography, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.BreifBiography, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label style="color: #17a2b8;"> </label>
+                    <input type="submit" value="Save" class="btn btn-primary btn-block" />
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label style="color: #17a2b8;"> View Category </label>
+
+                <div class="form-group">
+
+                    <a height="240px" class="btn btn-primary " href="ViewSkill"> View </a>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <p> @ViewBag.Message</p>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    }
+
+</div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

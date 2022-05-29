@@ -16,6 +16,8 @@ namespace HRMSNUML.Controllers
     {
         private HRMSNUMLContext db = new HRMSNUMLContext();
 
+        public object Id { get; private set; }
+
         // GET: HR/AddConsultancyServices
         public ActionResult AddConsultancyServices()
         {
@@ -121,6 +123,11 @@ namespace HRMSNUML.Controllers
             return View(db.Award.ToList());
         }
 
+        public ActionResult ViewSkill()
+        {
+            return View(db.skill.ToList());
+        }
+
         // GET: HR/DeleteAwards
         public ActionResult DeleteAwards(int? id)
         {
@@ -136,6 +143,20 @@ namespace HRMSNUML.Controllers
             return View(award);
         }
 
+        public ActionResult DeleteSkill(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            skill Skill = db.skill.Find(id);
+            if (Skill == null)
+            {
+                return HttpNotFound();
+            }
+            return View(Skill);
+        }
+
         // GET: HR/IPRightCategory/AddCategory
         public ActionResult AddCategory()
         {
@@ -145,6 +166,55 @@ namespace HRMSNUML.Controllers
         public ActionResult AddSkillCategory()
         {
             return View();
+        }
+
+        public ActionResult AddSkill()
+        {
+            // List<SelectListItem> ddlcategory = new List<SelectListItem>();
+            // List<skillcategory> _VMCategory = new List<skillcategory>();
+            // ddlcategory.Add(new SelectListItem { Text = "Select", Value = "" });
+            //  _VMCategory = db.skillcategory.ToList();
+            //  foreach (var item in _VMCategory)
+            //  {
+            //      ddlcategory.Add(new SelectListItem { Text = item.Title, Value = item.SkillCategoryId.ToString() });
+            //  }
+
+            //  ViewData["ddlcategory"] = ddlcategory;
+
+            ViewBag.Category = new SelectList(db.skillcategory, "SkillCategoryId", "Title");
+            
+
+
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddSkill(skill Skill)
+        {
+
+            ViewBag.Category = new SelectList(db.skillcategory, "SkillCategoryId", "Title");
+
+            skill entity = new skill
+            {
+                skillCategoryID = Skill.skillCategoryID,
+                SkillSubCategoryId = Skill.SkillSubCategoryId,
+                BreifBiography = Skill.BreifBiography,
+            };
+            db.skill.Add(entity);
+            if (db.SaveChanges() > 0)
+            {
+                ViewBag.Message = "Skill Saved Successfully";
+            }
+            return View();
+
+        }
+
+        public JsonResult getsubcategorybyId(int ID)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            return Json(db.SkillSubCategory.Where(p => p.SkillCategoryId == ID), JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult AddSkillSubCategory()
@@ -191,6 +261,23 @@ namespace HRMSNUML.Controllers
                 return HttpNotFound();
             }
             return View(categories);
+        }
+
+        // GET: HR/EditSkill
+        public ActionResult EditSkill(int? id)
+        {
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            skill Skill = db.skill.Find(id);
+            ViewBag.Category = new SelectList(db.skillcategory, "SkillCategoryId", "Title");
+            if (Skill == null)
+            {
+                return HttpNotFound();
+            }
+            return View(Skill);
         }
 
         public ActionResult EditSkillCategory(int? id)
@@ -525,12 +612,46 @@ namespace HRMSNUML.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        public ActionResult EditSkill(skill Skill)
+        {
+
+            ViewBag.Category = new SelectList(db.skillcategory, "SkillCategoryId", "Title");
+
+            skill entity = new skill
+            {
+                skillCategoryID = Skill.skillCategoryID,
+                SkillSubCategoryId = Skill.SkillSubCategoryId,
+                BreifBiography = Skill.BreifBiography,
+            };
+
+            if (ModelState.IsValid)
+            {
+                db.Entry(Skill).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("ViewSkill");
+            }
+            return View(Skill);
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult DeleteAwards(int id)
         {
             Award award = db.Award.Find(id);
             db.Award.Remove(award);
             db.SaveChanges();
             return RedirectToAction("ViewAwards");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteSkill(int id)
+        {
+            skill Skill = db.skill.Find(id);
+            db.skill.Remove(Skill);
+            db.SaveChanges();
+            return RedirectToAction("ViewSkill");
         }
 
         [HttpPost]
