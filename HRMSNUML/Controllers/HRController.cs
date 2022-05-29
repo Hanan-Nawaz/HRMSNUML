@@ -149,6 +149,16 @@ namespace HRMSNUML.Controllers
 
         public ActionResult AddSkillSubCategory()
         {
+            List<SelectListItem> ddlcategory = new List<SelectListItem>();
+            List<skillcategory> _VMCategory = new List<skillcategory>();
+            ddlcategory.Add(new SelectListItem { Text = "Select", Value = "" });
+            _VMCategory = db.skillcategory.ToList();
+            foreach (var item in _VMCategory)
+            {
+                ddlcategory.Add(new SelectListItem { Text = item.Title, Value = item.SkillCategoryId.ToString() });
+            }
+
+            ViewData["ddlcategory"] = ddlcategory;
             return View();
         }
 
@@ -163,6 +173,10 @@ namespace HRMSNUML.Controllers
             return View(db.skillcategory.ToList());
         }
 
+        public ActionResult ViewSkillSubCategory()
+        {
+            return View(db.SkillSubCategory.ToList());
+        }
 
         // GET: HR/IPRightCategory/EditCategory
         public ActionResult EditCategory(int? id)
@@ -200,6 +214,44 @@ namespace HRMSNUML.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             skillcategory categories = db.skillcategory.Find(id);
+            if (categories == null)
+            {
+                return HttpNotFound();
+            }
+            return View(categories);
+        }
+
+        public ActionResult EditSkillSubCategory(int? id)
+        {
+            List<SelectListItem> ddlcategory = new List<SelectListItem>();
+            List<skillcategory> _VMCategory = new List<skillcategory>();
+            ddlcategory.Add(new SelectListItem { Text = "Select", Value = "" });
+            _VMCategory = db.skillcategory.ToList();
+            foreach (var item in _VMCategory)
+            {
+                ddlcategory.Add(new SelectListItem { Text = item.Title, Value = item.SkillCategoryId.ToString() });
+            }
+            ViewData["ddlcategory"] = ddlcategory;
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            SkillSubCategory categories = db.SkillSubCategory.Find(id);
+            if (categories == null)
+            {
+                return HttpNotFound();
+            }
+            return View(categories);
+        }
+
+        public ActionResult DeleteSkillSubCategory(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            SkillSubCategory categories = db.SkillSubCategory.Find(id);
             if (categories == null)
             {
                 return HttpNotFound();
@@ -522,10 +574,21 @@ namespace HRMSNUML.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddSkillSubCategory(SkillSubCategory categories)
         {
+            List<SelectListItem> ddlcategory = new List<SelectListItem>();
+            List<skillcategory> _VMCategory = new List<skillcategory>();
+            ddlcategory.Add(new SelectListItem { Text = "Select", Value = "" });
+            _VMCategory = db.skillcategory.ToList();
+            foreach (var item in _VMCategory)
+            {
+                ddlcategory.Add(new SelectListItem { Text = item.Title, Value = item.SkillCategoryId.ToString() });
+            }
+            ViewData["ddlcategory"] = ddlcategory;
+
             SkillSubCategory entity = new SkillSubCategory
             {
                 SkillSubCategoryId = categories.SkillSubCategoryId,
                 Title = categories.Title,
+                SkillCategoryId = categories.SkillCategoryId,
                 
             };
 
@@ -557,10 +620,13 @@ namespace HRMSNUML.Controllers
             return View(categories);
         }
 
+        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditSkillCategory(skillcategory categories)
         {
+     
             skillcategory entity = new skillcategory
             {
                 SkillCategoryId = categories.SkillCategoryId,
@@ -574,6 +640,47 @@ namespace HRMSNUML.Controllers
                 return RedirectToAction("ViewSkillCategory");
             }
             return View(categories);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditSkillSubCategory(SkillSubCategory categories)
+        {
+            List<SelectListItem> ddlcategory = new List<SelectListItem>();
+            List<skillcategory> _VMCategory = new List<skillcategory>();
+            ddlcategory.Add(new SelectListItem { Text = "Select", Value = "" });
+            _VMCategory = db.skillcategory.ToList();
+            foreach (var item in _VMCategory)
+            {
+                ddlcategory.Add(new SelectListItem { Text = item.Title, Value = item.SkillCategoryId.ToString() });
+            }
+            ViewData["ddlcategory"] = ddlcategory;
+
+            SkillSubCategory entity = new SkillSubCategory
+            {
+                SkillSubCategoryId = categories.SkillSubCategoryId,
+                Title = categories.Title,
+                SkillCategoryId = categories.SkillCategoryId,
+
+            };
+
+            if (ModelState.IsValid)
+            {
+                db.Entry(entity).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("ViewSkillSubCategory");
+            }
+            return View(categories);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteSkillSubCategory(int id)
+        {
+            SkillSubCategory categories = db.SkillSubCategory.Find(id);
+            db.SkillSubCategory.Remove(categories);
+            db.SaveChanges();
+            return RedirectToAction("ViewSkillSubCategory");
         }
 
         [HttpPost]

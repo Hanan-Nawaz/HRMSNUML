@@ -225,6 +225,10 @@
     <Content Include="Views\HR\DeleteSkillCategory.cshtml" />
     <Content Include="Views\HR\EditSkillCategory.cshtml" />
     <Content Include="Views\HR\ViewSkillCategory.cshtml" />
+    <Content Include="Views\HR\AddSkillSubCategory.cshtml" />
+    <Content Include="Views\HR\DeleteSkillSubCategory.cshtml" />
+    <Content Include="Views\HR\EditSkillSubCategory.cshtml" />
+    <Content Include="Views\HR\ViewSkillSubCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
