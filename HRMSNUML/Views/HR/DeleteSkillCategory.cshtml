@@ -1,0 +1,42 @@
+﻿@model HRMSNUML.Models.skillcategory
+
+@{
+    ViewBag.Title = "Delete Category";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="shadow-lg p-3 mb-5 bg-white rounded">
+    <div class="card card-info mt-2 mx-auto">
+        <div class="card-header" style="background-color: deepskyblue;">
+            <h3 class="card-title"> Delete Category </h3>
+        </div>
+    </div>
+
+    <h3>Are you sure you want to delete this?</h3>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label style="color: #17a2b8;"> </label>
+                    <input type="submit" value="Delete" class="btn btn-danger btn-block" />
+
+                </div>
+            </div>
+
+        </div>
+    }
+</div>

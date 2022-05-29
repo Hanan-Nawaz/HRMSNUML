@@ -142,11 +142,27 @@ namespace HRMSNUML.Controllers
             return View();
         }
 
+        public ActionResult AddSkillCategory()
+        {
+            return View();
+        }
+
+        public ActionResult AddSkillSubCategory()
+        {
+            return View();
+        }
+
         // GET: HR/IPRightCategory/ViewCategory
         public ActionResult ViewCategory()
         {
             return View(db.Categories.ToList());
         }
+
+        public ActionResult ViewSkillCategory()
+        {
+            return View(db.skillcategory.ToList());
+        }
+
 
         // GET: HR/IPRightCategory/EditCategory
         public ActionResult EditCategory(int? id)
@@ -156,6 +172,34 @@ namespace HRMSNUML.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Categories categories = db.Categories.Find(id);
+            if (categories == null)
+            {
+                return HttpNotFound();
+            }
+            return View(categories);
+        }
+
+        public ActionResult EditSkillCategory(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            skillcategory categories = db.skillcategory.Find(id);
+            if (categories == null)
+            {
+                return HttpNotFound();
+            }
+            return View(categories);
+        }
+
+        public ActionResult DeleteSkillCategory(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            skillcategory categories = db.skillcategory.Find(id);
             if (categories == null)
             {
                 return HttpNotFound();
@@ -457,6 +501,45 @@ namespace HRMSNUML.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        public ActionResult AddSkillCategory(skillcategory categories)
+        {
+            skillcategory entity = new skillcategory
+            {
+                SkillCategoryId = categories.SkillCategoryId,
+                Title = categories.Title,
+            };
+
+            db.skillcategory.Add(entity);
+            if (db.SaveChanges() > 0)
+            {
+                ViewBag.Message = "Category Saved Successfully";
+            }
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddSkillSubCategory(SkillSubCategory categories)
+        {
+            SkillSubCategory entity = new SkillSubCategory
+            {
+                SkillSubCategoryId = categories.SkillSubCategoryId,
+                Title = categories.Title,
+                
+            };
+
+            db.SkillSubCategory.Add(entity);
+            if (db.SaveChanges() > 0)
+            {
+                ViewBag.Message = "Category Saved Successfully";
+            }
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult EditCategory( Categories categories)
         {
             Categories entity = new Categories
@@ -472,6 +555,35 @@ namespace HRMSNUML.Controllers
                 return RedirectToAction("ViewCategory");
             }
             return View(categories);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditSkillCategory(skillcategory categories)
+        {
+            skillcategory entity = new skillcategory
+            {
+                SkillCategoryId = categories.SkillCategoryId,
+                Title = categories.Title,
+            };
+
+            if (ModelState.IsValid)
+            {
+                db.Entry(entity).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("ViewSkillCategory");
+            }
+            return View(categories);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteSkillCategory(int id)
+        {
+            skillcategory categories = db.skillcategory.Find(id);
+            db.skillcategory.Remove(categories);
+            db.SaveChanges();
+            return RedirectToAction("ViewSkillCategory");
         }
 
         [HttpPost]

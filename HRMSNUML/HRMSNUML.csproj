@@ -156,6 +156,10 @@
     <Compile Include="Migrations\202205231825101_TablesCreationAwards.designer.cs">
       <DependentUpon>202205231825101_TablesCreationAwards.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202205291017197_skill.cs" />
+    <Compile Include="Migrations\202205291017197_skill.designer.cs">
+      <DependentUpon>202205291017197_skill.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Award.cs" />
     <Compile Include="Models\AwardsCategory.cs" />
@@ -164,8 +168,10 @@
     <Compile Include="Models\Designations.cs" />
     <Compile Include="Models\IPRights.cs" />
     <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\skill.cs" />
+    <Compile Include="Models\skillcategory.cs" />
+    <Compile Include="Models\SkillSubCategory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\AwardsController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -215,6 +221,10 @@
     <Content Include="Views\HR\ViewAwards.cshtml" />
     <Content Include="Views\HR\EditAwards.cshtml" />
     <Content Include="Views\HR\DeleteAwards.cshtml" />
+    <Content Include="Views\HR\AddSkillCategory.cshtml" />
+    <Content Include="Views\HR\DeleteSkillCategory.cshtml" />
+    <Content Include="Views\HR\EditSkillCategory.cshtml" />
+    <Content Include="Views\HR\ViewSkillCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -251,6 +261,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202205231825101_TablesCreationAwards.resx">
       <DependentUpon>202205231825101_TablesCreationAwards.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202205291017197_skill.resx">
+      <DependentUpon>202205291017197_skill.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

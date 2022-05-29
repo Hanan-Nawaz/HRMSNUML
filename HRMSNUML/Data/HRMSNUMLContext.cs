@@ -26,6 +26,9 @@ namespace HRMSNUML.Data
         public System.Data.Entity.DbSet<HRMSNUML.Models.IPRights> IPRights { get; set; }
         public System.Data.Entity.DbSet<HRMSNUML.Models.AwardsCategory> AwardsCategory { get; set; }
         public System.Data.Entity.DbSet<HRMSNUML.Models.Award> Award { get; set; }
+        public System.Data.Entity.DbSet<HRMSNUML.Models.skillcategory> skillcategory { get; set; }
+        public System.Data.Entity.DbSet<HRMSNUML.Models.SkillSubCategory> SkillSubCategory { get; set; }
+        public System.Data.Entity.DbSet<HRMSNUML.Models.skill> skill { get; set; }
 
     }
 }
